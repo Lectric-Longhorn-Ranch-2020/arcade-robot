@@ -13,6 +13,7 @@ import edu.wpi.cscore.VideoSource.ConnectionStrategy;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -22,12 +23,20 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
  * Runs the motors with arcade steering.
  */
 public class Robot extends TimedRobot {
+
+  // Actuators
   private final SpeedControllerGroup m_leftMotor = new SpeedControllerGroup(new PWMVictorSPX(0), new PWMVictorSPX(1));
-  private final SpeedControllerGroup m_rightMotor = new SpeedControllerGroup(new PWMVictorSPX(2), new PWMVictorSPX(3));  
-  // private final PWMVictorSPX m_leftMotor = new PWMVictorSPX(0);
-  //private final PWMVictorSPX m_rightMotor = new PWMVictorSPX(1);
+  private final SpeedControllerGroup m_rightMotor = new SpeedControllerGroup(new PWMVictorSPX(2), new PWMVictorSPX(3));
   private final DifferentialDrive m_robotDrive = new DifferentialDrive(m_leftMotor, m_rightMotor);
+  private final PWMVictorSPX m_conveyor = new PWMVictorSPX(4);
+  private final PWMVictorSPX m_grapple = new PWMVictorSPX(5);
+  private final Servo m_door = new Servo(6);
+  private final Servo m_conveyorRelease = new Servo(7);
+
+  // Controls
   private final Joystick m_stick = new Joystick(0);
+
+  // Video
   UsbCamera camera1;
   UsbCamera camera2;
   VideoSink server;
